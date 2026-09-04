@@ -1,0 +1,401 @@
+<!doctype html>
+<html lang="ko">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover" />
+<meta name="theme-color" content="#f5f3ee" />
+<title>WORLDLINE — Tech, Culture & Beauty, 2000→2027</title>
+<style>
+:root{
+  --paper:#f5f3ee;
+  --ink:#111317;
+  --muted:#747779;
+  --line:#d9d7d1;
+  --blue:#2457ff;
+  --rose:#dc6f91;
+  --rose-soft:#f3dce3;
+  --slate:#596270;
+  --card:#fbfaf7;
+  --culture-soft:#e9edf5;
+  --shadow:0 14px 40px rgba(17,19,23,.08);
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body{margin:0;background:var(--paper);color:var(--ink);font-family:Inter,ui-sans-serif,-apple-system,BlinkMacSystemFont,"SF Pro Display","Pretendard","Noto Sans KR","Segoe UI",sans-serif;overflow-x:hidden}
+button{font:inherit;color:inherit}
+a{color:inherit;text-decoration:none}
+::selection{background:var(--blue);color:white}
+
+.topbar{position:fixed;z-index:60;top:0;left:0;right:0;height:68px;display:flex;align-items:center;justify-content:space-between;padding:0 28px;border-bottom:1px solid rgba(17,19,23,.12);background:rgba(245,243,238,.84);backdrop-filter:blur(18px)}
+.brand{font-weight:850;letter-spacing:-.045em;font-size:20px;display:flex;align-items:center;gap:10px}
+.brand-dot{width:10px;height:10px;background:var(--blue);border-radius:50%;box-shadow:16px 0 0 var(--ink)}
+.top-actions{display:flex;gap:8px;align-items:center;flex-wrap:wrap;justify-content:flex-end}
+.ghost,.chip{border:1px solid rgba(17,19,23,.18);background:transparent;border-radius:999px;padding:8px 12px;cursor:pointer;transition:.2s;white-space:nowrap}
+.ghost:hover,.chip:hover,.chip.active{background:var(--ink);color:var(--paper);border-color:var(--ink)}
+.ghost.tech:hover{background:var(--blue);border-color:var(--blue);color:white}
+.ghost.culture:hover{background:var(--slate);border-color:var(--slate);color:white}
+.ghost.beauty:hover{background:var(--rose);border-color:var(--rose);color:white}
+
+.hero{min-height:100svh;padding:128px 28px 72px;display:grid;grid-template-columns:minmax(0,1.2fr) minmax(300px,.8fr);gap:42px;align-items:end;border-bottom:1px solid var(--line);position:relative;overflow:hidden}
+.hero h1{font-size:clamp(60px,10.8vw,174px);line-height:.78;letter-spacing:-.08em;margin:0;max-width:1100px;font-weight:900}
+.hero h1 .tech-accent{color:var(--blue)}
+.hero h1 .beauty-accent{color:var(--rose)}
+.hero-copy{max-width:500px;justify-self:end;padding-bottom:10px}
+.kicker{font-size:12px;letter-spacing:.15em;text-transform:uppercase;font-weight:800;color:var(--blue);margin-bottom:16px}
+.hero-copy p{font-size:clamp(18px,2vw,27px);line-height:1.24;letter-spacing:-.035em;margin:0 0 26px;font-weight:650}
+.legend{display:flex;gap:8px;flex-wrap:wrap}
+.legend span{font-size:12px;padding:7px 10px;border:1px solid var(--line);border-radius:999px;background:rgba(255,255,255,.38)}
+.legend .t{color:var(--blue);border-color:rgba(36,87,255,.28)}
+.legend .c{color:var(--slate);border-color:rgba(89,98,112,.28)}
+.legend .b{color:#a84263;border-color:rgba(220,111,145,.32)}
+.orbit{position:absolute;right:-10vw;top:7vh;width:40vw;aspect-ratio:1;border:1px solid rgba(36,87,255,.22);border-radius:50%;pointer-events:none}
+.orbit:before,.orbit:after{content:"";position:absolute;border-radius:50%}
+.orbit:before{inset:16%;border:1px solid rgba(89,98,112,.18)}
+.orbit:after{inset:36%;background:linear-gradient(135deg,var(--blue),var(--rose));opacity:.9;transform:scale(.18)}
+
+.quicknav{position:sticky;top:68px;z-index:50;background:rgba(245,243,238,.93);backdrop-filter:blur(18px);border-bottom:1px solid var(--line);display:flex;justify-content:space-between;gap:16px;align-items:center;padding:12px 28px}
+.quicknav-left{display:flex;gap:8px;overflow:auto;scrollbar-width:none}.quicknav-left::-webkit-scrollbar{display:none}
+.quicknav-right{font-size:12px;color:var(--muted);white-space:nowrap}
+
+.chapter{padding:100px 28px 128px;position:relative}
+.chapter.tech{background:var(--paper)}
+.chapter.culture{background:#f1f2f0;border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.chapter.beauty{background:#efebe5;border-bottom:1px solid var(--line)}
+.chapter-inner{max-width:1500px;margin:0 auto}
+.chapter-head{display:grid;grid-template-columns:1.05fr .95fr;gap:48px;align-items:end;margin-bottom:56px}
+.chapter-eyebrow{font-size:12px;letter-spacing:.16em;font-weight:850;text-transform:uppercase;margin-bottom:16px}
+.tech .chapter-eyebrow,.tech .chapter-head h2 span{color:var(--blue)}
+.culture .chapter-eyebrow,.culture .chapter-head h2 span{color:var(--slate)}
+.beauty .chapter-eyebrow,.beauty .chapter-head h2 span{color:var(--rose)}
+.chapter-head h2{font-size:clamp(54px,9vw,138px);line-height:.78;letter-spacing:-.075em;margin:0;font-weight:900}
+.chapter-intro{max-width:530px;justify-self:end;font-size:20px;line-height:1.42;letter-spacing:-.025em;margin:0;color:#4e4d4b}
+.section-tools{display:flex;justify-content:space-between;align-items:center;gap:16px;margin-bottom:22px}
+.filters{display:flex;gap:8px;overflow:auto;scrollbar-width:none}
+.filters::-webkit-scrollbar{display:none}
+.progress-label{font-size:12px;color:var(--muted);white-space:nowrap}
+
+.timeline{position:relative;padding-left:0}
+.timeline:before{content:"";position:absolute;left:136px;top:0;bottom:0;width:1px;background:var(--line)}
+.year-row{display:grid;grid-template-columns:108px minmax(0,1fr);gap:36px;min-height:48vh;padding:58px 0;border-bottom:1px solid var(--line);position:relative}
+.year-row:last-child{border-bottom:0}
+.year-label{position:sticky;top:150px;align-self:start;height:max-content;font-weight:900;font-size:34px;letter-spacing:-.05em}
+.year-label:after{content:"";position:absolute;right:-40px;top:17px;width:9px;height:9px;border-radius:50%;background:var(--paper);border:2px solid var(--ink)}
+.chapter.culture .year-label:after{background:#f1f2f0}
+.chapter.beauty .year-label:after{background:#efebe5}
+.year-row.future .year-label:after{background:var(--blue);border-color:var(--blue);box-shadow:0 0 0 8px rgba(36,87,255,.09)}
+.events{display:grid;grid-template-columns:repeat(12,1fr);gap:14px;align-content:start}
+.event-card{grid-column:span 6;background:var(--card);border:1px solid var(--line);border-radius:24px;padding:26px;min-height:320px;display:flex;flex-direction:column;justify-content:space-between;transition:transform .25s,border-color .25s,box-shadow .25s;position:relative;overflow:hidden}
+.event-card:only-child{grid-column:span 8}
+.event-card:hover{transform:translateY(-5px);box-shadow:var(--shadow)}
+.chapter.tech .event-card:hover{border-color:rgba(36,87,255,.42)}
+.chapter.culture .event-card{background:rgba(251,250,247,.92)}
+.chapter.culture .event-card:hover{border-color:rgba(89,98,112,.42)}
+.chapter.beauty .event-card{background:rgba(251,250,247,.86);border-color:#ddd5d3}
+.chapter.beauty .event-card:hover{border-color:rgba(220,111,145,.45)}
+.meta{display:flex;justify-content:space-between;align-items:center;gap:12px}
+.cat{font-size:11px;text-transform:uppercase;letter-spacing:.13em;font-weight:850;color:var(--blue)}
+.chapter.culture .cat{color:var(--slate)}
+.chapter.beauty .cat{color:#a84a68}
+.number{font-variant-numeric:tabular-nums;font-size:11px;color:var(--muted)}
+.pictogram{width:124px;height:124px;margin:18px 0 24px;border-radius:34px;background:var(--ink);color:var(--paper);display:grid;place-items:center;position:relative}
+.chapter.tech .pictogram{background:var(--ink)}
+.chapter.culture .pictogram{background:var(--slate)}
+.chapter.beauty .pictogram{background:var(--rose)}
+.pictogram svg{width:66px;height:66px;stroke:currentColor;fill:none;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+.event-card h3{font-size:clamp(29px,3vw,48px);line-height:.95;letter-spacing:-.055em;margin:0 0 12px;font-weight:850;max-width:720px}
+.event-card p{font-size:15px;line-height:1.55;color:#4f5356;margin:0;max-width:640px}
+.impact{margin-top:18px;padding-top:16px;border-top:1px solid var(--line);font-size:12px;color:var(--muted)}
+.impact b{color:var(--ink)}
+.future-card{background:var(--blue)!important;color:white;border-color:var(--blue)!important;min-height:390px}
+.future-card .cat,.future-card p,.future-card .number,.future-card .impact{color:rgba(255,255,255,.74)}
+.future-card .impact{border-color:rgba(255,255,255,.2)}
+.future-card .impact b{color:white}.future-card .pictogram{background:white!important;color:var(--blue)}
+
+.end{padding:120px 28px 150px;display:grid;grid-template-columns:1fr 1fr;gap:40px;max-width:1500px;margin:auto}
+.end h3{font-size:clamp(46px,7vw,104px);line-height:.87;letter-spacing:-.065em;margin:0;font-weight:900}
+.end-copy{align-self:end;max-width:520px;justify-self:end}.end-copy p{font-size:18px;line-height:1.5;color:#555;margin:0 0 22px}.small{font-size:12px!important;color:var(--muted)!important}
+.footer{padding:22px 28px 36px;border-top:1px solid var(--line);display:flex;justify-content:space-between;gap:18px;font-size:11px;color:var(--muted)}
+.toast{position:fixed;left:50%;bottom:24px;transform:translate(-50%,20px);opacity:0;pointer-events:none;background:var(--ink);color:white;border-radius:999px;padding:11px 16px;font-size:12px;z-index:80;transition:.25s}.toast.show{opacity:1;transform:translate(-50%,0)}
+
+@media(max-width:1050px){
+  .chapter-head{grid-template-columns:1fr;gap:22px}
+  .chapter-intro{justify-self:start}
+}
+@media(max-width:900px){
+  .topbar{padding:0 16px;height:auto;min-height:68px;align-items:flex-start;padding-top:12px;padding-bottom:12px}
+  .brand{padding-top:6px}
+  .hero{padding:128px 18px 56px;grid-template-columns:1fr;align-items:end}
+  .hero-copy{justify-self:start}
+  .orbit{width:72vw;right:-35vw}
+  .quicknav{padding:10px 16px;top:92px;flex-direction:column;align-items:flex-start}
+  .quicknav-right{display:none}
+  .chapter{padding:80px 16px 96px}
+  .timeline:before{left:53px}
+  .year-row{grid-template-columns:54px 1fr;gap:20px;padding:46px 0;min-height:0}
+  .year-label{font-size:18px;top:150px;writing-mode:vertical-rl;transform:rotate(180deg)}
+  .year-label:after{right:auto;left:-10px;top:3px;width:7px;height:7px}
+  .events{display:block}
+  .event-card,.event-card:only-child{grid-column:auto;min-height:300px;margin-bottom:12px;padding:22px}
+  .pictogram{width:100px;height:100px;border-radius:27px;margin-bottom:18px}
+  .pictogram svg{width:56px;height:56px}
+  .end{padding:90px 16px 120px;grid-template-columns:1fr}
+  .end-copy{justify-self:start}
+  .footer{padding:18px 16px 32px;flex-direction:column}
+}
+</style>
+</head>
+<body>
+<svg width="0" height="0" style="position:absolute">
+ <defs>
+  <symbol id="i-phone" viewBox="0 0 64 64"><rect x="20" y="6" width="24" height="52" rx="6"/><path d="M28 13h8M29 51h6"/></symbol>
+  <symbol id="i-chip" viewBox="0 0 64 64"><rect x="16" y="16" width="32" height="32" rx="4"/><rect x="24" y="24" width="16" height="16" rx="2"/><path d="M20 8v6M32 8v6M44 8v6M20 50v6M32 50v6M44 50v6M8 20h6M8 32h6M8 44h6M50 20h6M50 32h6M50 44h6"/></symbol>
+  <symbol id="i-book" viewBox="0 0 64 64"><path d="M16 13h23a9 9 0 0 1 9 9v29H24a8 8 0 0 0-8 8z"/><path d="M16 13v38a8 8 0 0 1 8-8h24"/></symbol>
+  <symbol id="i-camera" viewBox="0 0 64 64"><path d="M13 20h38a5 5 0 0 1 5 5v21a5 5 0 0 1-5 5H13a5 5 0 0 1-5-5V25a5 5 0 0 1 5-5z"/><circle cx="32" cy="35" r="11"/><path d="M22 20l4-6h12l4 6"/></symbol>
+  <symbol id="i-chat" viewBox="0 0 64 64"><path d="M14 17h36a8 8 0 0 1 8 8v16a8 8 0 0 1-8 8H29L16 57v-8h-2a8 8 0 0 1-8-8V25a8 8 0 0 1 8-8z"/></symbol>
+  <symbol id="i-play" viewBox="0 0 64 64"><rect x="9" y="14" width="46" height="36" rx="8"/><path d="m28 25 12 7-12 7z"/></symbol>
+  <symbol id="i-people" viewBox="0 0 64 64"><circle cx="22" cy="23" r="8"/><circle cx="42" cy="25" r="7"/><path d="M10 51c0-7 6-12 12-12s12 5 12 12M31 51c1-6 6-10 11-10 6 0 12 5 12 10"/></symbol>
+  <symbol id="i-music" viewBox="0 0 64 64"><path d="M41 14v28a7 7 0 1 1-4-6.32V21l-18 4v21a7 7 0 1 1-4-6.32V22z"/></symbol>
+  <symbol id="i-coin" viewBox="0 0 64 64"><circle cx="32" cy="32" r="20"/><path d="M36 22h-8a6 6 0 0 0 0 12h8a6 6 0 0 1 0 12h-8M32 18v28"/></symbol>
+  <symbol id="i-ai" viewBox="0 0 64 64"><path d="M32 10l16 9v18l-16 9-16-9V19z"/><path d="M24 39l8-14 8 14M27 34h10"/></symbol>
+  <symbol id="i-cloud" viewBox="0 0 64 64"><path d="M22 49h26a10 10 0 0 0 0-20 14 14 0 0 0-27-3A10 10 0 0 0 22 49z"/></symbol>
+  <symbol id="i-watch" viewBox="0 0 64 64"><rect x="20" y="18" width="24" height="28" rx="7"/><path d="M26 6h12l2 12H24zM24 46h16l-2 12H26z"/></symbol>
+  <symbol id="i-game" viewBox="0 0 64 64"><path d="M21 24h22a10 10 0 0 1 9.7 12.4l-3.1 12.3a5 5 0 0 1-8.3 2.3l-5.6-5.2H28.3l-5.6 5.2a5 5 0 0 1-8.3-2.3l-3.1-12.3A10 10 0 0 1 21 24z"/><path d="M23 35h8M27 31v8M42 34h.1M46 38h.1"/></symbol>
+  <symbol id="i-eye" viewBox="0 0 64 64"><path d="M6 32s10-14 26-14 26 14 26 14-10 14-26 14S6 32 6 32z"/><circle cx="32" cy="32" r="7"/></symbol>
+  <symbol id="i-wifi" viewBox="0 0 64 64"><path d="M11 24a31 31 0 0 1 42 0"/><path d="M19 32a20 20 0 0 1 26 0"/><path d="M27 40a9 9 0 0 1 10 0"/><circle cx="32" cy="48" r="2.5"/></symbol>
+  <symbol id="i-hole" viewBox="0 0 64 64"><circle cx="32" cy="32" r="12"/><path d="M10 31c3-10 12-17 22-17 12 0 19 8 22 18-3 9-11 18-22 18-10 0-19-7-22-19z"/></symbol>
+  <symbol id="i-rocket" viewBox="0 0 64 64"><path d="M35 12c9 0 17 7 17 17 0 11-8 21-20 27l-7-7c6-12 16-20 27-20z"/><path d="m25 39-8 8M18 46l-5 5M39 25h.1"/></symbol>
+  <symbol id="i-bars" viewBox="0 0 64 64"><path d="M14 48V28M26 48V18M38 48V24M50 48V12"/><path d="M10 52h44"/></symbol>
+  <symbol id="i-sparkle" viewBox="0 0 64 64"><path d="M32 7c2 14 9 21 23 23-14 2-21 9-23 23-2-14-9-21-23-23 14-2 21-9 23-23zM50 8c1 6 4 9 10 10-6 1-9 4-10 10-1-6-4-9-10-10 6-1 9-4 10-10z"/></symbol>
+  <symbol id="i-goggles" viewBox="0 0 64 64"><path d="M10 25h44a6 6 0 0 1 6 6v8a6 6 0 0 1-6 6H10a6 6 0 0 1-6-6v-8a6 6 0 0 1 6-6z"/><path d="M22 25v20M42 25v20M4 34h18M42 34h18"/></symbol>
+  <symbol id="i-robot" viewBox="0 0 64 64"><rect x="12" y="18" width="40" height="32" rx="8"/><path d="M32 10v8M27 10h10M22 31h.1M42 31h.1M23 41h18M7 28h5M52 28h5"/></symbol>
+  <symbol id="i-next" viewBox="0 0 64 64"><path d="M17 32h30"/><path d="m37 20 12 12-12 12"/><circle cx="20" cy="32" r="12"/></symbol>
+  <symbol id="i-lip" viewBox="0 0 64 64"><path d="M11 34c8-13 15-15 21-8 6-7 13-5 21 8-6 11-14 17-21 17S17 45 11 34z"/><path d="M13 34h38"/></symbol>
+  <symbol id="i-drop" viewBox="0 0 64 64"><path d="M32 7S14 28 14 40a18 18 0 0 0 36 0C50 28 32 7 32 7z"/><path d="M24 42c1 5 4 8 9 9"/></symbol>
+  <symbol id="i-mirror" viewBox="0 0 64 64"><circle cx="30" cy="27" r="18"/><path d="M43 40l12 12M19 53h22"/></symbol>
+  <symbol id="i-brush" viewBox="0 0 64 64"><path d="M39 9c7 0 12 5 12 12 0 8-8 15-19 21l-10-10C28 21 32 9 39 9z"/><path d="m29 39-8-8-11 17c-2 3 2 7 5 5z"/></symbol>
+  <symbol id="i-leaf" viewBox="0 0 64 64"><path d="M49 15c-16 0-29 13-29 29 16 0 29-13 29-29z"/><path d="M17 47c4-9 12-17 24-24"/></symbol>
+ </defs>
+</svg>
+
+<header class="topbar">
+  <div class="brand"><span class="brand-dot"></span>WORLDLINE</div>
+  <div class="top-actions">
+    <button class="ghost tech" data-jump="tech">TECH</button>
+    <button class="ghost culture" data-jump="culture">CULTURE</button>
+    <button class="ghost beauty" data-jump="beauty">BEAUTY</button>
+    <button class="ghost" id="randomBtn">RANDOM</button>
+    <button class="ghost" id="langBtn">EN</button>
+  </div>
+</header>
+
+<section class="hero" id="top">
+  <div>
+    <div class="kicker" data-ko="2000 → 2027 · 시대를 읽는 3개의 타임라인" data-en="2000 → 2027 · THREE TIMELINES TO READ AN ERA">2000 → 2027 · 시대를 읽는 3개의 타임라인</div>
+    <h1>TECH.<br>CULTURE.<br><span class="beauty-accent">BEAUTY.</span></h1>
+  </div>
+  <div class="hero-copy">
+    <p data-ko="이 웹은 무거운 사건보다 ‘삶의 감각’을 보여준다. 기술은 우리가 무엇을 할 수 있게 했는지, 문화는 인터넷이 우리 취향과 행동을 어떻게 바꿨는지, 뷰티는 각 시대가 무엇을 아름답다고 느꼈는지를 읽게 한다." data-en="This site is about the feel of life rather than hard news. Technology shows what became possible, culture shows how the internet reshaped taste and behavior, and beauty shows what each era decided looked desirable.">이 웹은 무거운 사건보다 ‘삶의 감각’을 보여준다. 기술은 우리가 무엇을 할 수 있게 했는지, 문화는 인터넷이 우리 취향과 행동을 어떻게 바꿨는지, 뷰티는 각 시대가 무엇을 아름답다고 느꼈는지를 읽게 한다.</p>
+    <div class="legend"><span class="t">⌁ TECHNOLOGY</span><span class="c">◉ CULTURE</span><span class="b">✦ BEAUTY</span></div>
+  </div>
+  <div class="orbit"></div>
+</section>
+
+<div class="quicknav">
+  <div class="quicknav-left">
+    <button class="chip active" data-section="tech">TECH TIMELINE</button>
+    <button class="chip" data-section="culture">CULTURE TIMELINE</button>
+    <button class="chip" data-section="beauty">BEAUTY TIMELINE</button>
+  </div>
+  <div class="quicknav-right"><span id="currentSection">TECH TIMELINE</span></div>
+</div>
+
+<section class="chapter tech" id="tech">
+  <div class="chapter-inner">
+    <div class="chapter-head">
+      <div>
+        <div class="chapter-eyebrow" data-ko="TIMELINE 01 · TECHNOLOGY" data-en="TIMELINE 01 · TECHNOLOGY">TIMELINE 01 · TECHNOLOGY</div>
+        <h2>TOOLS THAT<br><span>CHANGED</span><br>EVERYDAY LIFE.</h2>
+      </div>
+      <p class="chapter-intro" data-ko="손안의 기기, 인터넷 인프라, AI와 웨어러블까지. 매년 하나씩, 사람들이 실제로 생활 속에서 체감한 기술의 변화를 따라간다." data-en="From pocket devices to internet infrastructure, AI and wearables — one year at a time, follow the technologies people genuinely felt in daily life.">손안의 기기, 인터넷 인프라, AI와 웨어러블까지. 매년 하나씩, 사람들이 실제로 생활 속에서 체감한 기술의 변화를 따라간다.</p>
+    </div>
+    <div class="section-tools">
+      <div class="filters"><button class="chip active" data-techfilter="all">ALL</button><button class="chip" data-techfilter="core">CORE DEVICES & AI</button><button class="chip" data-techfilter="internet">INTERNET & INFRA</button></div>
+      <div class="progress-label">2000 — 2027</div>
+    </div>
+    <div class="timeline" id="techTimeline"></div>
+  </div>
+</section>
+
+<section class="chapter culture" id="culture">
+  <div class="chapter-inner">
+    <div class="chapter-head">
+      <div>
+        <div class="chapter-eyebrow" data-ko="TIMELINE 02 · CULTURE" data-en="TIMELINE 02 · CULTURE">TIMELINE 02 · CULTURE</div>
+        <h2>HOW THE<br>INTERNET <span>SHAPED</span><br>US.</h2>
+      </div>
+      <p class="chapter-intro" data-ko="플랫폼, 피드, 밈, 창작자 문화, 추천 알고리즘. 디지털 문화 타임라인은 사람들이 보고, 놀고, 연결되고, 취향을 만드는 방식을 읽는다." data-en="Platforms, feeds, memes, creator culture and recommendation algorithms. This cultural timeline reads how people watched, played, connected and formed taste online.">플랫폼, 피드, 밈, 창작자 문화, 추천 알고리즘. 디지털 문화 타임라인은 사람들이 보고, 놀고, 연결되고, 취향을 만드는 방식을 읽는다.</p>
+    </div>
+    <div class="timeline" id="cultureTimeline"></div>
+  </div>
+</section>
+
+<section class="chapter beauty" id="beauty">
+  <div class="chapter-inner">
+    <div class="chapter-head">
+      <div>
+        <div class="chapter-eyebrow" data-ko="TIMELINE 03 · BEAUTY" data-en="TIMELINE 03 · BEAUTY">TIMELINE 03 · BEAUTY</div>
+        <h2>THE FACE<br>OF <span>TIME.</span></h2>
+      </div>
+      <p class="chapter-intro" data-ko="뷰티는 그 시대가 무엇을 예쁘다고 여겼는지 보여준다. 메이크업, 피부 표현, 제품 포맷, K-Beauty 확산과 마이크로트렌드까지 얼굴의 시대성을 타임라인으로 읽는다." data-en="Beauty shows what each era thought looked beautiful. Read time through makeup, skin finish, product formats, the rise of K-beauty and the speed of microtrends.">뷰티는 그 시대가 무엇을 예쁘다고 여겼는지 보여준다. 메이크업, 피부 표현, 제품 포맷, K-Beauty 확산과 마이크로트렌드까지 얼굴의 시대성을 타임라인으로 읽는다.</p>
+    </div>
+    <div class="timeline" id="beautyTimeline"></div>
+  </div>
+</section>
+
+<section class="end">
+  <h3 data-ko="시대를 읽는 건<br>결국<br>사람을 읽는 것." data-en="TO READ AN ERA<br>IS REALLY TO READ<br>PEOPLE.">시대를 읽는 건<br>결국<br>사람을 읽는 것.</h3>
+  <div class="end-copy">
+    <p data-ko="기술은 가능성을 만들고, 문화는 사용 방식을 만들고, 뷰티는 감각을 시각화합니다. 세 개의 타임라인을 따로 보면 더 선명하게 각 영역의 변화가 보이고, 함께 보면 한 시대의 분위기가 완성됩니다." data-en="Technology creates possibility, culture creates behavior, and beauty visualizes feeling. Read them separately to see each stream clearly — and together to understand the atmosphere of an era.">기술은 가능성을 만들고, 문화는 사용 방식을 만들고, 뷰티는 감각을 시각화합니다. 세 개의 타임라인을 따로 보면 더 선명하게 각 영역의 변화가 보이고, 함께 보면 한 시대의 분위기가 완성됩니다.</p>
+    <p class="small" data-ko="2027은 미래를 사실처럼 말하지 않기 위해 NEXT 상태로 남겨두었습니다." data-en="2027 stays open as NEXT rather than pretending a future prediction is fact.">2027은 미래를 사실처럼 말하지 않기 위해 NEXT 상태로 남겨두었습니다.</p>
+  </div>
+</section>
+<footer class="footer"><span>WORLDLINE / Three Timeline Edition</span><span>2000—2027 · Technology · Culture · Beauty</span></footer>
+<div class="toast" id="toast"></div>
+
+<script>
+const techData = [
+{y:2000,e:[{i:'i-chip',ko:'USB 플래시 드라이브의 등장',en:'USB flash drives arrive',dko:'작은 메모리 하나에 파일을 넣어 주머니에 들고 다니는 시대가 시작됐다.',den:'Files could suddenly travel in a tiny piece of memory that fit in a pocket.',iko:'데이터가 컴퓨터 한 대에 묶여 있지 않게 됐다.',ien:'Personal data became much easier to carry between computers.',tag:'internet'}]},
+{y:2001,e:[{i:'i-book',ko:'위키피디아가 열리다',en:'Wikipedia goes online',dko:'누구나 지식을 쓰고 고칠 수 있는 협업형 백과사전이 시작됐다.',den:'A giant encyclopedia that anyone could write and edit began changing how people looked up knowledge.',iko:'인터넷이 정보 저장소를 넘어 집단 지식의 플랫폼이 됐다.',ien:'The web became a platform for collective knowledge.',tag:'internet'}]},
+{y:2002,e:[{i:'i-camera',ko:'카메라폰이 일상으로 들어오다',en:'Camera phones enter everyday life',dko:'휴대폰에 카메라가 붙으면서 사진은 특별한 날보다 일상을 기록하는 도구가 되기 시작했다.',den:'Putting cameras into phones made photography an everyday behavior instead of a special occasion.',iko:'셀카·스토리·숏폼 시대를 가능하게 한 기본 장치.',ien:'It laid the groundwork for selfies, stories and short-form video.',tag:'core'}]},
+{y:2003,e:[{i:'i-chat',ko:'Skype가 인터넷 전화를 대중화',en:'Skype popularizes internet calling',dko:'국제전화 요금 대신 인터넷으로 얼굴과 목소리를 연결하는 방식이 빠르게 익숙해졌다.',den:'Calling across countries through the internet became a normal alternative to expensive phone calls.',iko:'거리보다 연결 속도가 중요한 커뮤니케이션 시대로 이동했다.',ien:'Distance mattered less once communication could ride on the internet.',tag:'internet'}]},
+{y:2004,e:[{i:'i-chat',ko:'Gmail과 대용량 웹메일',en:'Gmail changes webmail',dko:'큰 저장공간과 검색 중심 이메일이 등장하며 메일을 지우기보다 쌓아두고 찾는 방식이 익숙해졌다.',den:'Large storage and search-first email made archiving and finding messages feel natural.',iko:'클라우드에 정보를 두고 검색하는 습관을 앞당겼다.',ien:'It helped normalize keeping information in the cloud and searching it later.',tag:'internet'}]},
+{y:2005,e:[{i:'i-play',ko:'YouTube가 열리다',en:'YouTube goes online',dko:'누구나 영상을 올리고 전 세계가 같은 영상을 보는 플랫폼이 시작됐다.',den:'Anyone could upload video and reach a global audience on one platform.',iko:'영상이 방송국의 전유물이 아니라 개인의 도구가 됐다.',ien:'Video stopped belonging only to broadcasters and became a personal medium.',tag:'internet'}]},
+{y:2007,e:[{i:'i-phone',ko:'iPhone이 화면을 손안의 컴퓨터로 바꾸다',en:'iPhone turns the screen into a pocket computer',dko:'전화, 음악, 카메라와 인터넷이 멀티터치 화면 하나로 합쳐졌다.',den:'Phone, music, camera and internet merged behind one multitouch screen.',iko:'컴퓨터가 책상 위 기기에서 하루 종일 손에 쥐는 물건이 됐다.',ien:'Computing moved from the desk into the hand.',tag:'core'}]},
+{y:2008,e:[{i:'i-phone',ko:'앱스토어와 Android',en:'App stores and Android reshape mobile',dko:'다운로드형 앱 생태계와 개방형 모바일 운영체제가 스마트폰을 확장 가능한 플랫폼으로 만들었다.',den:'Downloadable apps and an open mobile operating system turned smartphones into extensible platforms.',iko:'휴대폰의 기능을 제조사가 아니라 앱이 계속 확장하는 시대가 됐다.',ien:'Apps, not only manufacturers, could define what a phone was capable of.',tag:'core'}]},
+{y:2009,e:[{i:'i-coin',ko:'Bitcoin 네트워크 시작',en:'The Bitcoin network starts',dko:'중앙 기관 없이 거래 기록과 디지털 희소성을 관리하는 블록체인 실험이 실제 네트워크로 작동하기 시작했다.',den:'A live network demonstrated digital scarcity and transaction records without a central institution.',iko:'돈과 소유권을 소프트웨어로 설계할 수 있다는 아이디어를 널리 알렸다.',ien:'It popularized the idea that money and ownership could be designed in software.',tag:'internet'}]},
+{y:2010,e:[{i:'i-phone',ko:'iPad가 새로운 화면 크기를 만들다',en:'iPad creates a new screen category',dko:'휴대폰보다 크고 노트북보다 가벼운 터치스크린이 읽기, 영상, 드로잉과 업무의 새로운 형태를 만들었다.',den:'A touchscreen larger than a phone but lighter than a laptop opened new ways to read, watch, draw and work.',iko:'컴퓨팅 기기의 형태가 PC와 휴대폰 사이에서 다양해졌다.',ien:'Personal computing expanded beyond the laptop-versus-phone split.',tag:'core'}]},
+{y:2011,e:[{i:'i-ai',ko:'Siri와 음성 비서',en:'Siri brings voice assistants to phones',dko:'사람의 말로 질문하고 명령하는 인터페이스가 스마트폰 안으로 들어왔다.',den:'Talking to a phone became a mainstream interface for questions and commands.',iko:'AI가 화면 뒤 기능이 아니라 대화 상대처럼 느껴지기 시작했다.',ien:'AI began to feel less like background software and more like an assistant.',tag:'core'}]},
+{y:2012,e:[{i:'i-ai',ko:'딥러닝이 이미지 인식에서 도약',en:'Deep learning makes a leap in image recognition',dko:'신경망 기반 AI가 대규모 이미지 인식 성능을 크게 끌어올리며 현대 AI 붐의 전환점을 만들었다.',den:'Neural-network systems made a major jump in large-scale image recognition, helping ignite the modern AI wave.',iko:'데이터로부터 직접 학습하는 방식이 AI의 중심으로 올라왔다.',ien:'Learning directly from data became central to modern AI.',tag:'core'}]},
+{y:2013,e:[{i:'i-cloud',ko:'클라우드가 기본 작업공간이 되다',en:'The cloud becomes the default workspace',dko:'파일을 특정 컴퓨터에 저장하기보다 여러 기기에서 동기화하고 공동 편집하는 습관이 자리 잡았다.',den:'Syncing and collaborating across devices became more natural than keeping files on one machine.',iko:'“내 컴퓨터”보다 “내 계정”이 중요한 컴퓨팅으로 이동했다.',ien:'Your account increasingly mattered more than one specific computer.',tag:'internet'}]},
+{y:2014,e:[{i:'i-chat',ko:'집 안의 음성 AI',en:'Voice AI moves into the home',dko:'스피커에 말을 걸어 음악, 날씨, 타이머와 스마트홈을 제어하는 인터페이스가 등장했다.',den:'Talking to a speaker to control music, timers, information and smart-home devices became a new interaction model.',iko:'컴퓨터 화면이 없는 곳에서도 AI를 쓰는 방식이 확장됐다.',ien:'AI interfaces began spreading beyond screens.',tag:'core'}]},
+{y:2015,e:[{i:'i-watch',ko:'스마트워치가 몸에 붙는 컴퓨터가 되다',en:'Smartwatches put computing on the body',dko:'알림, 운동, 심박과 결제를 손목에서 처리하며 웨어러블 컴퓨팅이 대중 시장에 자리 잡기 시작했다.',den:'Notifications, fitness, heart rate and payments moved onto the wrist as wearables entered the mainstream.',iko:'기술이 손에 드는 물건에서 몸에 착용하는 물건으로 이동했다.',ien:'Personal technology started moving from carried devices to worn devices.',tag:'core'}]},
+{y:2017,e:[{i:'i-eye',ko:'Face ID와 얼굴이 비밀번호가 되다',en:'Face ID turns the face into a password',dko:'휴대폰 잠금과 결제에 얼굴 인식이 사용되며 생체인증이 일상적인 사용자 경험이 됐다.',den:'Face recognition for unlocking and payments made biometric authentication feel routine.',iko:'비밀번호 입력 없이 “내가 나임”을 증명하는 인터페이스가 확산됐다.',ien:'Identity itself became part of the interface.',tag:'core'}]},
+{y:2019,e:[{i:'i-wifi',ko:'5G 상용화가 시작되다',en:'Commercial 5G begins rolling out',dko:'더 빠르고 지연이 낮은 이동통신망이 스마트폰과 연결 기기의 다음 단계를 위한 기반으로 등장했다.',den:'Faster, lower-latency mobile networks began rolling out as infrastructure for the next generation of connected devices.',iko:'모바일 연결이 단순한 다운로드 속도에서 실시간 서비스의 기반으로 확장됐다.',ien:'Mobile connectivity became infrastructure for more real-time services.',tag:'internet'}]},
+{y:2020,e:[{i:'i-play',ko:'영상통화와 온라인 협업이 기본 기능이 되다',en:'Video calls and online collaboration become default',dko:'회의, 수업, 파일 공유와 공동 작업이 브라우저와 클라우드 안에서 자연스럽게 이어지는 생활 방식이 자리 잡았다.',den:'Meetings, classes, file sharing and collaboration rapidly became normal browser-and-cloud activities.',iko:'어디에서 일하는가보다 어떻게 연결되는가가 중요해졌다.',ien:'How people connected started to matter more than where they worked.',tag:'internet'}]},
+{y:2021,e:[{i:'i-rocket',ko:'제임스 웹 우주망원경 발사',en:'James Webb Space Telescope launches',dko:'더 먼 우주와 초기 은하를 관측할 차세대 우주망원경이 우주로 향했다.',den:'A next-generation space telescope launched to observe farther into the universe and earlier cosmic history.',iko:'센서, 광학, 우주공학이 인간이 볼 수 있는 시간의 범위를 넓혔다.',ien:'Sensors, optics and space engineering extended how far back humans could observe.',tag:'core'}]},
+{y:2022,e:[{i:'i-ai',ko:'ChatGPT가 공개되다',en:'ChatGPT is released',dko:'대화형 생성 AI가 일반 사용자에게 공개되며 자연어로 컴퓨터에 일을 요청하는 경험이 대중화됐다.',den:'Conversational generative AI reached the public and made natural-language instructions a mainstream computing interface.',iko:'검색창 다음의 인터페이스가 “대화”가 될 수 있음을 보여줬다.',ien:'It showed that conversation could become a major interface after search.',tag:'core'}]},
+{y:2023,e:[{i:'i-sparkle',ko:'생성 AI가 이미지·코드·음성까지 확장',en:'Generative AI expands across media',dko:'텍스트뿐 아니라 이미지, 코딩, 음성과 영상까지 만드는 AI 도구가 창작과 업무에 빠르게 들어왔다.',den:'AI tools for images, code, audio and video rapidly entered creative and professional workflows.',iko:'AI가 하나의 앱이 아니라 여러 도구 안에 들어가는 기능이 되기 시작했다.',ien:'AI started becoming a layer inside many tools rather than one standalone app.',tag:'core'}]},
+{y:2024,e:[{i:'i-goggles',ko:'공간 컴퓨팅이 소비자 시장에 들어오다',en:'Spatial computing reaches consumers',dko:'혼합현실 헤드셋이 현실 공간 위에 앱, 화면과 3D 콘텐츠를 배치하는 새로운 컴퓨팅 방식을 보여줬다.',den:'Mixed-reality headsets demonstrated a new way to place apps, screens and 3D content into physical space.',iko:'화면이 사각형 디스플레이를 넘어 주변 공간 전체로 확장되기 시작했다.',ien:'The idea of a screen began expanding into the surrounding room.',tag:'core'}]},
+{y:2025,e:[{i:'i-robot',ko:'AI 에이전트와 로봇이 “행동”을 배우다',en:'AI agents and robots move toward action',dko:'답을 생성하는 AI에서 벗어나 여러 단계를 계획하고 도구를 사용하거나 물리적 작업을 수행하려는 시스템이 빠르게 발전했다.',den:'Systems increasingly moved beyond answering toward planning multi-step tasks, using tools and acting in the physical world.',iko:'다음 경쟁은 “무엇을 아는가”보다 “무엇을 해낼 수 있는가”로 이동 중이다.',ien:'The next frontier is shifting from what AI knows to what it can actually do.',tag:'core'}]},
+{y:2026,e:[{i:'i-robot',ko:'AI가 챗창 밖으로 나오다',en:'AI moves beyond the chat box',dko:'개인 비서형 소프트웨어, 자동화 에이전트, 웨어러블과 로봇에 AI가 결합되며 화면 안 답변보다 실제 작업 흐름에 더 깊게 들어가고 있다.',den:'AI is increasingly being embedded in assistants, automation agents, wearables and robots rather than living only inside chat interfaces.',iko:'AI가 독립된 서비스가 아니라 일상의 보이지 않는 레이어가 되어가는 단계.',ien:'AI is becoming an ambient layer of everyday tools rather than a separate destination.',tag:'core'}]},
+{y:2027,future:true,e:[{i:'i-next',ko:'NEXT INTERFACE?',en:'NEXT INTERFACE?',dko:'다음 변화는 화면일까, 목소리일까, 안경일까, 로봇일까? 아직 오지 않은 2027은 예측 대신 빈칸으로 남긴다.',den:'Will the next shift be a screen, a voice, glasses, a robot — or something else? 2027 stays open instead of pretending a prediction is fact.',iko:'미래는 만들어지는 중이다.',ien:'The future is still being built.',tag:'core'}]}
+];
+
+const cultureData = [
+{y:2001,e:[{i:'i-music',ko:'iPod와 “1,000곡을 주머니에”',en:'iPod puts music in your pocket',dko:'수백 장의 CD 대신 하나의 작은 기기에 음악 라이브러리를 담는 경험이 대중화됐다.',den:'A whole music library could replace stacks of CDs inside one small device.',iko:'콘텐츠를 소유하고 휴대하는 방식이 디지털로 바뀌었다.',ien:'It accelerated the shift from physical media to digital libraries.'}]},
+{y:2004,e:[{i:'i-people',ko:'Facebook 시대의 시작',en:'The Facebook era begins',dko:'온라인 프로필, 친구 관계, 사진과 상태 업데이트가 하나의 소셜 그래프로 연결되기 시작했다.',den:'Profiles, friends, photos and status updates began merging into one social graph.',iko:'인터넷이 “정보를 보는 곳”에서 “사람이 사는 곳”으로 변했다.',ien:'The internet shifted from a place to read information into a place to live socially.'}]},
+{y:2006,e:[{i:'i-chat',ko:'140자의 실시간 인터넷',en:'The real-time web in 140 characters',dko:'짧은 문장으로 지금 일어나는 일을 즉시 공유하는 새로운 인터넷 리듬이 만들어졌다.',den:'Short, immediate public updates created a new rhythm for the internet.',iko:'뉴스와 밈이 실시간으로 퍼지는 문화를 만들었다.',ien:'It helped create the real-time culture of news, memes and reaction.'}]},
+{y:2010,e:[{i:'i-camera',ko:'Instagram과 필터의 시대',en:'Instagram makes life a visual feed',dko:'휴대폰 사진, 정사각형 프레임과 필터가 일상을 하나의 시각적 피드로 바꿨다.',den:'Phone photos, square frames and filters turned everyday life into a visual feed.',iko:'음식, 여행, 패션과 뷰티가 “보여주기 좋은가”까지 생각하게 됐다.',ien:'Food, travel, fashion and beauty increasingly had to be visually shareable.'}]},
+{y:2012,e:[{i:'i-camera',ko:'Snapchat과 사라지는 사진',en:'Snapchat makes photos temporary',dko:'영구적으로 남기는 피드와 달리 잠깐 보고 사라지는 사진이 새로운 소통 방식이 됐다.',den:'Photos that disappeared after viewing created a different, more casual form of communication.',iko:'온라인에서 모든 것이 영원히 남아야 하는 것은 아니라는 문화를 만들었다.',ien:'It challenged the idea that every online post had to be permanent.'}]},
+{y:2016,e:[{i:'i-game',ko:'Pokémon GO와 현실 위의 디지털 세계',en:'Pokémon GO layers digital life onto reality',dko:'증강현실과 위치정보가 게임을 화면 밖 실제 거리와 공원으로 끌어냈다.',den:'Augmented reality and location data pulled a mass-market game out into streets and parks.',iko:'현실 공간 위에 디지털 정보가 겹쳐지는 경험을 대중화했다.',ien:'It made digital layers over physical space feel normal.'}]},
+{y:2018,e:[{i:'i-play',ko:'TikTok식 숏폼이 세계를 점령하기 시작',en:'TikTok-style short video takes off globally',dko:'세로 영상, 음악, 빠른 편집과 추천 알고리즘이 결합된 새로운 콘텐츠 문법이 폭발적으로 성장했다.',den:'Vertical video, music, fast editing and recommendation algorithms formed a new global content language.',iko:'누구를 팔로우하는가보다 알고리즘이 무엇을 보여주는가가 중요해졌다.',ien:'What the algorithm showed you began to matter as much as who you followed.'}]},
+{y:2021,e:[{i:'i-bars',ko:'크리에이터 이코노미가 직업이 되다',en:'The creator economy becomes a career path',dko:'영상, 뉴스레터, 라이브스트리밍과 구독을 통해 개인이 미디어이자 작은 비즈니스가 되는 구조가 커졌다.',den:'Video, newsletters, livestreams and subscriptions helped individuals operate as both media channels and small businesses.',iko:'“회사에 들어가는 것” 외에 인터넷 자체가 직업의 플랫폼이 됐다.',ien:'The internet itself became a platform for building a career.'}]},
+{y:2026,e:[{i:'i-eye',ko:'검색보다 “추천받는 인터넷”',en:'The internet becomes recommendation-first',dko:'영상, 쇼핑, 음악과 정보 탐색에서 직접 검색하는 것만큼 알고리즘이 먼저 골라주는 경험이 중요해졌다.',den:'Across video, shopping, music and information, algorithmic recommendations matter as much as deliberate search.',iko:'인터넷 사용이 “찾기”에서 “발견되기”로 이동하고 있다.',ien:'Using the internet is shifting from finding toward being shown.'}]}
+];
+
+const beautyData = [
+{era:'2000–04',i:'i-lip',ko:'Y2K GLOSS',en:'Y2K GLOSS',dko:'반짝이는 립글로스, 얇은 눈썹, 실버·프로스티 섀도와 맥시멀한 팝스타 미학.',den:'Shiny lip gloss, thin brows, frosted shadow and a maximal pop-star aesthetic.',iko:'뷰티가 팝스타 이미지와 잡지 비주얼을 통해 즉각적으로 소비되던 시대.',ien:'Beauty was consumed through pop-star imagery and glossy magazine visuals.',year:'2000s opening'},
+{era:'2005–09',i:'i-eye',ko:'SMOKY & SCULPTED',en:'SMOKY & SCULPTED',dko:'짙은 아이라인, 스모키 아이, 태닝과 볼륨 헤어가 레드카펫과 잡지 미학을 이끌었다.',den:'Dark liner, smoky eyes, tanning and voluminous hair defined a red-carpet and magazine-driven look.',iko:'강한 메이크업이 셀럽 중심의 “글램” 이미지를 대표했다.',ien:'High-impact makeup became shorthand for celebrity glamour.',year:'late 2000s'},
+{era:'2010–14',i:'i-drop',ko:'K-BEAUTY RISE',en:'K-BEAUTY RISE',dko:'BB 크림, 쿠션, 틴트와 촉촉한 피부 표현이 한국을 넘어 글로벌 뷰티 언어로 퍼지기 시작했다.',den:'BB cream, cushions, tints and dewy skin helped K-beauty become a global beauty language.',iko:'메이크업보다 피부 표현과 제품 포맷이 트렌드 자체가 됐다.',ien:'Skin finish and product format became trend drivers in themselves.',year:'early 2010s'},
+{era:'2015–17',i:'i-brush',ko:'CONTOUR ERA',en:'CONTOUR ERA',dko:'강한 눈썹, 매트 립, 컨투어링과 풀커버 베이스가 튜토리얼 중심 소셜 뷰티를 대표했다.',den:'Bold brows, matte lips, contouring and full-coverage base defined tutorial-driven social beauty.',iko:'SNS 튜토리얼 문화가 “정교하게 만든 얼굴”을 표준처럼 만들었다.',ien:'Tutorial culture on social media popularized a more sculpted, produced face.',year:'mid 2010s'},
+{era:'2018–19',i:'i-sparkle',ko:'GLASS SKIN',en:'GLASS SKIN',dko:'스킨케어 루틴, 광채, 수분감과 “유리알 피부”가 메이크업만큼 피부 관리 자체를 트렌드로 만들었다.',den:'Skincare routines, glow, hydration and “glass skin” made the condition of skin itself part of the look.',iko:'스킨케어가 뷰티의 뒤쪽 단계가 아니라 메인 카테고리로 올라왔다.',ien:'Skincare moved from backstage routine to front-stage beauty category.',year:'2018–2019'},
+{era:'2020–21',i:'i-leaf',ko:'SKINIMALISM',en:'SKINIMALISM',dko:'무거운 풀메이크업보다 가벼운 베이스, 멀티유즈 제품과 피부 본연의 질감을 살리는 흐름이 커졌다.',den:'Lighter bases, multi-use products and visible natural skin texture gained ground over heavy full makeup.',iko:'“덜 하는 것”이 더 현대적이고 세련된 표현이 됐다.',ien:'Doing less became a more modern and refined beauty signal.',year:'2020–2021'},
+{era:'2022–23',i:'i-mirror',ko:'CLEAN GIRL',en:'CLEAN GIRL',dko:'윤기 있는 피부, 빗어 올린 브로우, 미니멀한 색조와 슬릭 헤어가 숏폼에서 강한 시각적 코드가 됐다.',den:'Glowy skin, brushed brows, minimal color and slick hair became a strong short-form visual code.',iko:'짧은 영상에서 즉시 인식되는 “정돈된 이미지”가 미학이 됐다.',ien:'An instantly legible polished look became a dominant short-form aesthetic.',year:'2022–2023'},
+{era:'2024–26',i:'i-lip',ko:'BLUSH + LIP OIL',en:'BLUSH + LIP OIL',dko:'투명한 광, 촉촉한 립 오일, 강한 블러시와 빠르게 바뀌는 마이크로트렌드가 동시에 공존한다.',den:'Sheer shine, lip oils, expressive blush and fast-moving microtrends increasingly coexist.',iko:'하나의 정답 대신 여러 취향이 짧게 순환하는 시대를 보여준다.',ien:'It reflects a beauty era driven by many short, fast-turning tastes instead of one single standard.',year:'2024–2026'}
+];
+
+let lang='ko';
+let techFilter='all';
+const toast=document.getElementById('toast');
+const sectionObserver = new IntersectionObserver(entries=>{
+  const visible = entries.filter(e=>e.isIntersecting).sort((a,b)=>b.intersectionRatio-a.intersectionRatio)[0];
+  if(!visible) return;
+  const id = visible.target.id;
+  const label = id==='tech' ? 'TECH TIMELINE' : id==='culture' ? 'CULTURE TIMELINE' : 'BEAUTY TIMELINE';
+  document.getElementById('currentSection').textContent = label;
+  document.querySelectorAll('.quicknav .chip[data-section]').forEach(btn=>btn.classList.toggle('active', btn.dataset.section===id));
+},{threshold:[.22,.45,.7]});
+['tech','culture','beauty'].forEach(id=>sectionObserver.observe(document.getElementById(id)));
+
+function renderEventTimeline(targetId, rows, kind){
+  const target=document.getElementById(targetId);
+  target.innerHTML='';
+  rows.forEach((row,ri)=>{
+    const sec=document.createElement('section');
+    sec.className='year-row'+(row.future?' future':'');
+    sec.id=`${targetId}-${String(row.y || row.era).replace(/[^a-zA-Z0-9]+/g,'-')}`;
+    const label = row.y || row.era;
+    sec.innerHTML=`<div class="year-label">${label}</div><div class="events"></div>`;
+    const wrap=sec.querySelector('.events');
+    row.e.forEach((ev,ei)=>{
+      if(kind==='tech' && techFilter!=='all' && !row.future && ev.tag!==techFilter) return;
+      const card=document.createElement('article');
+      const future = !!row.future;
+      card.className='event-card'+(future?' future-card':'');
+      const cat = future ? 'NEXT' : kind==='tech' ? 'TECHNOLOGY' : kind==='culture' ? 'CULTURE' : 'BEAUTY';
+      card.innerHTML=`<div><div class="meta"><span class="cat">${cat}</span><span class="number">${String(ri+1).padStart(2,'0')}.${ei+1}</span></div><div class="pictogram"><svg><use href="#${ev.i}"></use></svg></div></div><div><h3>${lang==='ko'?ev.ko:ev.en}</h3><p>${lang==='ko'?ev.dko:ev.den}</p><div class="impact"><b>WHY IT MATTERS</b> · ${lang==='ko'?ev.iko:ev.ien}</div></div>`;
+      wrap.appendChild(card);
+    });
+    if(wrap.children.length) target.appendChild(sec);
+  });
+}
+
+function renderBeautyTimeline(){
+  const rows = beautyData.map(item=>({era:item.era,e:[item]}));
+  renderEventTimeline('beautyTimeline', rows, 'beauty');
+}
+
+function renderAll(){
+  renderEventTimeline('techTimeline', techData, 'tech');
+  renderEventTimeline('cultureTimeline', cultureData, 'culture');
+  renderBeautyTimeline();
+  document.querySelectorAll('[data-ko]').forEach(el=>{el.innerHTML = el.dataset[lang]});
+  document.getElementById('langBtn').textContent = lang==='ko' ? 'EN' : 'KO';
+}
+
+function jumpTo(sectionId){
+  document.getElementById(sectionId)?.scrollIntoView({behavior:'smooth'});
+}
+
+function randomJump(){
+  const picks = [
+    ...techData.map(r=>`techTimeline-${String(r.y).replace(/[^a-zA-Z0-9]+/g,'-')}`),
+    ...cultureData.map(r=>`cultureTimeline-${String(r.y).replace(/[^a-zA-Z0-9]+/g,'-')}`),
+    ...beautyData.map(r=>`beautyTimeline-${String(r.era).replace(/[^a-zA-Z0-9]+/g,'-')}`)
+  ];
+  const id = picks[Math.floor(Math.random()*picks.length)];
+  document.getElementById(id)?.scrollIntoView({behavior:'smooth'});
+  showToast(lang==='ko' ? '랜덤 타임라인으로 이동' : 'Jumped to a random timeline entry');
+}
+
+function showToast(t){
+  toast.textContent=t;
+  toast.classList.add('show');
+  clearTimeout(window.tt);
+  window.tt=setTimeout(()=>toast.classList.remove('show'),1300);
+}
+
+renderAll();
+
+document.querySelectorAll('[data-jump]').forEach(btn=>btn.addEventListener('click',()=>jumpTo(btn.dataset.jump)));
+document.querySelectorAll('.quicknav .chip[data-section]').forEach(btn=>btn.addEventListener('click',()=>jumpTo(btn.dataset.section)));
+document.getElementById('langBtn').addEventListener('click',()=>{lang = lang==='ko' ? 'en' : 'ko'; renderAll();});
+document.getElementById('randomBtn').addEventListener('click', randomJump);
+document.querySelectorAll('[data-techfilter]').forEach(btn=>btn.addEventListener('click',()=>{
+  techFilter=btn.dataset.techfilter;
+  document.querySelectorAll('[data-techfilter]').forEach(x=>x.classList.toggle('active',x===btn));
+  renderEventTimeline('techTimeline', techData, 'tech');
+}));
+</script>
+</body>
+</html>
